@@ -19,6 +19,7 @@ typedef struct {
 Receitas *criar_receitas();
 void adicionar_receita(Receitas *, char *, struct receita);
 
+void ler_receitas(Receitas *);
 void salvar_receitas(Receitas *);
 
 #endif

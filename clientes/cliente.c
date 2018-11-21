@@ -62,65 +62,60 @@ int remover_clientes(Clientes *lista, char *nome){
 }
 
 void ler_clientes(Clientes *lista){
-    FILE *arquivo;
-    arquivo = fopen("clientes.txt", "r");
+    FILE *arquivo = fopen("clientes.txt", "r");
+    if (arquivo){
+        struct cliente c;
+        int tamanho;
 
-    if (arquivo == NULL)
-        return;
+        fscanf(arquivo, "%d ", &tamanho);
 
-    struct cliente c;
-    int i, tamanho;
+        for (; tamanho > 0; tamanho--){
+            fscanf(arquivo, "%[^\n]%*c\n", &c.nome);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.email);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.endereco.logradouro);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.endereco.endereco);
+            fscanf(arquivo, "%d\n", &c.endereco.numero);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.endereco.bairro);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.endereco.cidade);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.endereco.estado);
+            fscanf(arquivo, "%d\n", &c.telefone.ddd);
+            fscanf(arquivo, "%[^\n]%*c\n", &c.telefone.telefone);
+            fscanf(arquivo, "%d\n", &c.nascimento.ano);
+            fscanf(arquivo, "%u\n", &c.nascimento.dia);
+            fscanf(arquivo, "%u\n", &c.nascimento.mes);
+            adicionar_cliente(lista, c);
+        }
 
-    fscanf(arquivo, "%d", &tamanho);
-
-    for (i = 0; i < tamanho; i++){
-        fscanf(arquivo, "\n%[^\n]s", &c.nome);
-        fscanf(arquivo, "%s", &c.email);
-        fscanf(arquivo, "\n%[^\n]s", &c.endereco.logradouro);
-        fscanf(arquivo, "\n%[^\n]s", &c.endereco.endereco);
-        fscanf(arquivo, "%d", &c.endereco.numero);
-        fscanf(arquivo, "\n%[^\n]s", &c.endereco.bairro);
-        fscanf(arquivo, "\n%[^\n]s", &c.endereco.cidade);
-        fscanf(arquivo, "\n%[^\n]s", &c.endereco.estado);
-        fscanf(arquivo, "%d", &c.telefone.ddd);
-        fscanf(arquivo, "%s", &c.telefone.telefone);
-        fscanf(arquivo, "%d", &c.nascimento.dia);
-        fscanf(arquivo, "%d", &c.nascimento.mes);
-        fscanf(arquivo, "%d", &c.nascimento.ano);
-
-        adicionar_cliente(lista, c);
+        fclose(arquivo);
     }
-
-    fclose(arquivo);
 }
 
 void salvar_clientes(Clientes *lista){
     FILE *arquivo;
     arquivo = fopen("clientes.txt", "w");
 
-    if (arquivo == NULL){
-        fprintf(stderr, "Erro ao salvar.\n");
+    if (arquivo){
+        fprintf(arquivo, "%d\n", lista->tamanho);
+        int i;
+        for (i = 0; i < lista->tamanho; i++){
+            fprintf(arquivo, "%s\n", lista->clientes[i].nome);
+            fprintf(arquivo, "%s\n", lista->clientes[i].email);
+            fprintf(arquivo, "%s\n", lista->clientes[i].endereco.logradouro);
+            fprintf(arquivo, "%s\n", lista->clientes[i].endereco.endereco);
+            fprintf(arquivo, "%d\n", lista->clientes[i].endereco.numero);
+            fprintf(arquivo, "%s\n", lista->clientes[i].endereco.bairro);
+            fprintf(arquivo, "%s\n", lista->clientes[i].endereco.cidade);
+            fprintf(arquivo, "%s\n", lista->clientes[i].endereco.estado);
+            fprintf(arquivo, "%d\n", lista->clientes[i].telefone.ddd);
+            fprintf(arquivo, "%s\n", lista->clientes[i].telefone.telefone);
+            fprintf(arquivo, "%d\n", lista->clientes[i].nascimento.ano);
+            fprintf(arquivo, "%u\n", lista->clientes[i].nascimento.dia);
+            fprintf(arquivo, "%u\n", lista->clientes[i].nascimento.mes);
+        }
+
+        fclose(arquivo);
+    } else {
+        fprintf(stderr, "Erro ao salvar - salvar_clientes();.\n");
         exit(1);
     }
-
-    fprintf(arquivo, "%d\n", lista->tamanho);
-    
-    int i;
-    for (i = 0; i < lista->tamanho; i++){
-        fprintf(arquivo, "%s\n", lista->clientes[i].nome);
-        fprintf(arquivo, "%s\n", lista->clientes[i].email);
-        fprintf(arquivo, "%s\n", lista->clientes[i].endereco.logradouro);
-        fprintf(arquivo, "%s\n", lista->clientes[i].endereco.endereco);
-        fprintf(arquivo, "%d\n", lista->clientes[i].endereco.numero);
-        fprintf(arquivo, "%s\n", lista->clientes[i].endereco.bairro);
-        fprintf(arquivo, "%s\n", lista->clientes[i].endereco.cidade);
-        fprintf(arquivo, "%s\n", lista->clientes[i].endereco.estado);
-        fprintf(arquivo, "%d\n", lista->clientes[i].telefone.ddd);
-        fprintf(arquivo, "%s\n", lista->clientes[i].telefone.telefone);
-        fprintf(arquivo, "%d\n", lista->clientes[i].nascimento.dia);
-        fprintf(arquivo, "%d\n", lista->clientes[i].nascimento.mes);
-        fprintf(arquivo, "%d\n", lista->clientes[i].nascimento.ano);
-    }
-
-    fclose(arquivo);
 }

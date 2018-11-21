@@ -23,7 +23,7 @@ struct telefone {
 struct data {
     unsigned short dia;
     unsigned short mes;
-    unsigned short ano;
+    unsigned ano;
 };
 
 struct cliente {

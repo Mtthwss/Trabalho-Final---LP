@@ -36,21 +36,22 @@ void carregarlistas(){
     lista_clientes = criar_clientes();
     ler_clientes(lista_clientes);
     lista_receitas = criar_receitas();
+    ler_receitas(lista_receitas);
     lista_categorias = criar_categorias();
     ler_categorias(lista_categorias);
 }
 
 void finalizar(){
-    salvar_receitas(lista_receitas);
     salvar_clientes(lista_clientes);
     salvar_categorias(lista_categorias);
-    exit(1);
+    salvar_receitas(lista_receitas);
+    exit(0);
 }
 
 void menuprincipal(){
     int opcao;
 
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- MENU --------\n");
     printf("[1] Novo usuario.\n");
     printf("[2] Entrar no sistema.\n");
@@ -74,7 +75,7 @@ void menuprincipal(){
 void menucliente(){
     int opcao;
     
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- %s --------\n", lista_clientes->clientes[usuario_id].nome);
     printf("[1] - Nova movimentacao.\n");
     printf("[2] - Remover movimentacao.\n");
@@ -115,7 +116,7 @@ void menucliente(){
 void menunovamovimentacao(){
     int opcao;
     
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- NOVA MOVIMENTACAO --------\n", lista_clientes->clientes[usuario_id].nome);
     printf("[1] - Receitas.\n");
     printf("[2] - Gastos.\n");
@@ -143,7 +144,7 @@ void menunovamovimentacao(){
 void menuvermovimentacao(){
     int opcao;
     
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- VER MOVIMENTACOES --------\n", lista_clientes->clientes[usuario_id].nome);
     printf("[1] - Receitas.\n");
     printf("[2] - Gastos.\n");
@@ -170,7 +171,7 @@ void menuvermovimentacao(){
 void novousuario(){
     struct cliente cliente;
 
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- BEM VINDO --------\n");
     printf("Para continuar, preencha as informacoes a seguir: \n");
     printf("Insira seu nome: ");
@@ -217,7 +218,7 @@ void usuarioexistente(){
     char nome[100], escolha;
     int encontrado = 0;
 
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- BEM VINDO --------\n");
     printf("Insira o seu nome: ");
     scanf("\n%[^\n]s", &nome);
@@ -242,7 +243,7 @@ void usuarioexistente(){
 void novacategoria(){
     char titulo[100], escolha;
     
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- NOVA CATEGORIA --------\n");
     printf("Insira o titulo da sua nova categoria: ");
     scanf("\n%[^\n]s", &titulo);
@@ -261,7 +262,7 @@ void listarcategorias(){
     int i, count;
     char escolha;
 
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- CATEGORIAS --------\n");
 
     for (i = 0, count = 0; i < lista_categorias->tamanho; i++)
@@ -283,7 +284,7 @@ void novareceita(){
     int i;
     struct receita novareceita;
 
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- NOVA RECEITA --------\n");
 
     if (lista_categorias->tamanho == 0){
@@ -326,7 +327,7 @@ void verreceitas(){
     int i, count;
     char escolha;
 
-    printf("\E[2J\E[2H");
+    system("cls");
     printf("-------- VER RECEITAS --------\n");
 
     printf("Voce registrou %d receitas.\n", lista_receitas->tamanho);
